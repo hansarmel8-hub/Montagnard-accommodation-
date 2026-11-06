@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Montagnard Accommodation : trouvez votre logement au Cameroun et à Dubaï.">
+<title>Montagnard Accommodation</title>
+<style>
+:root{--blue:#0865ED;--navy:#080B32;--white:#fff;--gray:#F4F6FA;--text:#252A40;--border:#E2E6EF;--green:#16845b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,sans-serif;background:var(--gray);color:var(--text)}
+header{background:var(--navy);color:#fff;padding:14px 18px;position:sticky;top:0;z-index:10}
+.navigation{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;color:white;text-decoration:none;font-weight:bold;letter-spacing:.5px}
+.brand img{width:48px;height:48px;object-fit:contain;border-radius:8px;background:#fff}
+.brand small{display:block;color:#cbd5f5;font-size:10px;margin-top:3px}
+.menu-toggle{width:auto;margin:0;padding:8px 12px;background:transparent;border:1px solid #8791c7;font-size:22px}
+nav{display:none;width:100%;margin-top:8px}
+nav.open{display:block}
+nav a{display:block;padding:11px 4px;color:white;text-decoration:none;border-top:1px solid #30365c}
+nav a:hover{color:#9fc4ff}
+button,.button{cursor:pointer;border:0;border-radius:8px;background:var(--blue);color:white;padding:12px 16px;font-size:15px;font-weight:bold;text-decoration:none;display:inline-block}
+button.secondary,.button.secondary{background:#e8efff;color:var(--navy)}
+button.danger{background:#b42318}
+button.small{padding:8px 10px;font-size:13px;margin:4px 4px 0 0}
+input,select,textarea{width:100%;padding:12px;margin-top:6px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:15px;color:var(--text)}
+textarea{min-height:105px;resize:vertical}
+label{display:block;font-weight:bold;font-size:14px;margin-top:12px}
+.hero{background:linear-gradient(135deg,var(--navy),#123f9a);color:white;padding:35px 18px 42px}
+.hero-inner{max-width:1100px;margin:auto}
+.hero h1{font-size:clamp(28px,6vw,44px);line-height:1.15;margin:8px 0 12px}
+.hero p{line-height:1.6;color:#e4eaff;max-width:650px}
+.panel{background:#fff;color:var(--text);padding:18px;border-radius:14px;margin-top:22px;box-shadow:0 8px 28px #0002}
+.search-grid{display:grid;grid-template-columns:1fr;gap:8px}
+main{max-width:1200px;margin:auto;padding:24px 16px}
+section{scroll-margin-top:90px}
+h2{color:var(--navy);margin:0 0 16px}
+.section{margin:30px 0}
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.category{background:white;border:1px solid var(--border);padding:17px 10px;border-radius:12px;text-align:center;font-weight:bold;cursor:pointer}
+.category span{display:block;font-size:27px;margin-bottom:7px}
+.category.active{border:2px solid var(--blue);background:#edf4ff}
+.cards{display:grid;grid-template-columns:1fr;gap:16px}
+.card{background:white;border:1px solid var(--border);border-radius:13px;overflow:hidden;box-shadow:0 3px 12px #1018280d}
+.card img{width:100%;height:190px;object-fit:cover;background:#e5e7eb}
+.card-info{padding:15px}
+.card h3{margin:9px 0}
+.muted{color:#667085;font-size:14px}
+.price{font-size:19px;font-weight:bold;color:var(--blue);margin:10px 0}
+.tag{display:inline-block;border-radius:20px;background:#e8efff;color:#123f9a;padding:5px 9px;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{flex:1}
+.form-grid{display:grid;grid-template-columns:1fr;gap:4px}
+.notice{padding:12px;border-radius:9px;background:#fff7e6;color:#7a4b00;margin:12px 0;font-size:14px;line-height:1.5}
+.success{color:var(--green);font-weight:bold}
+.hidden{display:none!important}
+#photoPreview{display:none;max-width:100%;max-height:220px;object-fit:contain;margin-top:12px;border-radius:9px}
+.owner-row{display:flex;gap:12px;background:white;padding:12px;border:1px solid var(--border);border-radius:10px;margin:10px 0;align-items:center}
+.owner-row img{width:82px;height:72px;object-fit:cover;border-radius:8px}
+.owner-row .owner-info{flex:1;min-width:0}
+.owner-row .owner-info strong{display:block;overflow-wrap:anywhere}
+footer{background:var(--navy);color:white;text-align:center;padding:28px 16px;margin-top:35px;font-size:14px}
+.modal-backdrop{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:16px;z-index:30}
+.modal-backdrop.show{display:flex}
+.modal{background:white;border-radius:14px;padding:20px;width:min(100%,480px);max-height:90vh;overflow:auto}
+.modal h2{margin-top:0}
+.modal-close{float:right;background:#eef1f6;color:#222;padding:7px 11px}
+.account-box{background:#fff;border:1px solid var(--border);border-radius:13px;padding:18px;margin:18px 0}
+.account-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.account-tabs button{flex:1}
+.profile-line{padding:9px 0;border-bottom:1px solid var(--border)}
+@media(min-width:650px){.search-grid,.form-grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:950px){.menu-toggle{display:none}nav{display:flex!important;width:auto;margin:0;gap:16px}nav a{border:0;padding:10px 0}.cards{grid-template-columns:repeat(3,1fr)}.categories{grid-template-columns:repeat(6,1fr)}.search-grid{grid-template-columns:repeat(4,1fr);align-items:end}.form-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="navigation">
+  <a class="brand" href="#accueil">
+   <img src="logo-montagnard.jpg" alt="Logo Montagnard" onerror="this.style.display='none'">
+   <span>MONTAGNARD<small>ACCOMMODATION</small></span>
+  </a>
+  <button class="menu-toggle" type="button" onclick="ouvrirMenu()" aria-label="Ouvrir le menu">☰</button>
+  <nav id="menu">
+   <a href="#accueil" onclick="fermerMenu()">Accueil</a>
+   <a href="#annonces" onclick="fermerMenu()">Logements</a>
+   <a href="#publier" onclick="fermerMenu()">Publier</a>
+   <a href="#compte" onclick="fermerMenu()">Mon compte</a>
+  </nav>
+ </div>
+</header>
+
+<section class="hero" id="accueil">
+ <div class="hero-inner">
+  <h1>Votre prochain logement commence ici.</h1>
+  <p>Découvrez des bed spaces, partitions, chambres privées, studios, appartements et maisons au Cameroun et à Dubaï.</p>
+  <div class="panel">
+   <h3>Rechercher un logement</h3>
+   <div class="search-grid">
+    <div><label for="pays">Pays</label><select id="pays"><option value="">Tous les pays</option><option value="Cameroun">Cameroun</option><option value="Émirats arabes unis">Émirats arabes unis</option></select></div>
+    <div><label for="ville">Ville ou quartier</label><input id="ville" placeholder="Yaoundé, Douala, Dubai"></div>
+    <div><label for="typeRecherche">Type de logement</label><select id="typeRecherche"><option value="">Tous les types</option><option>Bed space</option><option>Partition</option><option>Chambre privée</option><option>Studio</option><option>Appartement</option><option>Maison</option></select></div>
+    <div><button type="button" onclick="rechercherLogement()">Rechercher</button></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<main>
+ <section class="section" id="categories">
+  <h2>Explorez nos catégories</h2>
+  <div class="categories">
+   <div class="category" onclick="filtrerCategorie('Bed space',this)"><span>🛏️</span>Bed spaces</div>
+   <div class="category" onclick="filtrerCategorie('Partition',this)"><span>🚪</span>Partitions</div>
+   <div class="category" onclick="filtrerCategorie('Chambre privée',this)"><span>🛌</span>Chambres privées</div>
+   <div class="category" onclick="filtrerCategorie('Studio',this)"><span>🏢</span>Studios</div>
+   <div class="category" onclick="filtrerCategorie('Appartement',this)"><span>🏠</span>Appartements</div>
+   <div class="category" onclick="filtrerCategorie('Maison',this)"><span>🏡</span>Maisons</div>
+  </div>
+ </section>
+
+ <section class="section" id="annonces">
+  <h2>Logements à découvrir</h2>
+  <p class="muted">Les annonces de démonstration ci-dessous sont fictives. Les annonces publiées sur cet appareil sont enregistrées localement.</p>
+  <div class="cards" id="listeLogements">
+   <article class="card" data-demo="1" data-type="Chambre privée" data-country="Cameroun" data-city="Yaoundé">
+    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800" alt="Chambre meublée">
+    <div class="card-info"><span class="tag">Exemple fictif</span><h3>Chambre meublée</h3><p class="muted">Yaoundé, Cameroun</p><p class="price">75 000 FCFA / mois</p></div>
+   </article>
+   <article class="card" data-demo="1" data-type="Studio" data-country="Cameroun" data-city="Douala">
+    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800" alt="Studio moderne">
+    <div class="card-info"><span class="tag">Exemple fictif</span><h3>Studio moderne</h3><p class="muted">Douala, Cameroun</p><p class="price">120 000 FCFA / mois</p></div>
+   </article>
+   <article class="card" data-demo="1" data-type="Appartement" data-country="Émirats arabes unis" data-city="Dubai">
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800" alt="Appartement moderne">
+    <div class="card-info"><span class="tag">Exemple fictif</span><h3>Appartement moderne</h3><p class="muted">Dubai, Émirats arabes unis</p><p class="price">3 500 AED / mois</p></div>
+   </article>
+  </div>
+  <p id="aucunResultat" class="muted hidden">Aucun logement ne correspond à cette recherche.</p>
+ </section>
+
+ <section class="section" id="publier">
+  <h2>Publier une annonce</h2>
+  <div class="notice">Version de démonstration : tes annonces sont enregistrées uniquement dans le navigateur de ce téléphone. Elles ne sont pas encore visibles par les autres utilisateurs.</div>
+  <div id="authRequired" class="notice">Connecte-toi et choisis un compte propriétaire ou agence pour publier une annonce.</div>
+  <form id="formAnnonce" class="panel hidden">
+   <div id="editBanner" class="notice hidden">Tu modifies une annonce existante.</div>
+   <div class="form-grid">
+    <div><label for="pubPays">Pays</label><select id="pubPays" required><option value="Cameroun">Cameroun</option><option value="Émirats arabes unis">Émirats arabes unis</option></select></div>
+    <div><label for="pubType">Type de logement</label><select id="pubType" required><option>Bed space</option><option>Partition</option><option>Chambre privée</option><option>Studio</option><option>Appartement</option><option>Maison</option></select></div>
+    <div><label for="pubVille">Ville</label><input id="pubVille" required placeholder="Ex : Yaoundé ou Dubai"></div>
+    <div><label for="pubQuartier">Quartier</label><input id="pubQuartier" placeholder="Ex : Ébang, Bonamoussadi"></div>
+    <div><label for="pubTitre">Titre de l'annonce</label><input id="pubTitre" required maxlength="80"></div>
+    <div><label for="pubPrix">Prix du loyer</label><input id="pubPrix" type="number" min="1" required></div>
+    <div><label for="pubDevise">Devise</label><select id="pubDevise"><option>FCFA</option><option>AED</option></select></div>
+    <div><label for="pubWhatsapp">Numéro WhatsApp avec indicatif</label><input id="pubWhatsapp" required placeholder="Ex : 2376XXXXXXXX"></div>
+   </div>
+   <label for="pubDescription">Description</label><textarea id="pubDescription" required maxlength="1200"></textarea>
+   <label for="pubPhoto">Photo du logement (max. 900 Ko)</label><input id="pubPhoto" type="file" accept="image/*" required>
+   <img id="photoPreview" alt="Aperçu de la photo">
+   <div class="actions"><button id="submitButton" type="submit">Publier l'annonce</button><button id="cancelEditButton" class="secondary hidden" type="button" onclick="annulerModification()">Annuler la modification</button></div>
+   <p id="messagePublication" aria-live="polite"></p>
+  </form>
+ </section>
+
+ <section class="section" id="compte">
+  <h2>Mon compte</h2>
+  <div class="account-box" id="zoneCompte">
+   <div class="account-tabs"><button type="button" onclick="afficherFormCompte('inscription')">Créer un compte</button><button class="secondary" type="button" onclick="afficherFormCompte('connexion')">Se connecter</button></div>
+   <div class="notice">Démonstration uniquement : ce compte est conservé sur ce téléphone. N'utilise pas un vrai mot de passe. La connexion sécurisée sera mise en place avec Supabase plus tard.</div>
+   <form id="formCompte" onsubmit="traiterCompte(event)">
+    <h3 id="titreCompte">Créer un compte</h3>
+    <label for="nomCompte">Nom complet</label><input id="nomCompte" autocomplete="name" required>
+    <label for="emailCompte">Adresse e-mail (facultatif si téléphone renseigné)</label><input id="emailCompte" type="email" autocomplete="email">
+    <label for="telephoneCompte">Téléphone avec indicatif (facultatif si e-mail renseigné)</label><input id="telephoneCompte" type="tel" autocomplete="tel" placeholder="+237...">
+    <label for="motDePasseCompte">Mot de passe de démonstration</label><input id="motDePasseCompte" type="password" minlength="4" required>
+    <div id="choixRoleBox"><label for="roleCompte">Type de compte</label><select id="roleCompte"><option value="tenant">Locataire</option><option value="owner">Propriétaire</option><option value="agency">Agence immobilière</option></select></div>
+    <label for="paysCompte">Pays</label><select id="paysCompte"><option>Cameroun</option><option>Émirats arabes unis</option><option>Autre</option></select>
+    <button id="boutonCompte" type="submit">Créer mon compte (démo)</button>
+    <p id="messageCompte" aria-live="polite"></p>
+   </form>
+  </div>
+  <div class="account-box hidden" id="profilCompte">
+   <h3>Mon espace personnel</h3>
+   <div class="profile-line"><strong>Nom :</strong> <span id="profilNom"></span></div>
+   <div class="profile-line"><strong>E-mail :</strong> <span id="profilEmail"></span></div>
+   <div class="profile-line"><strong>Téléphone :</strong> <span id="profilTelephone"></span></div>
+   <div class="profile-line"><strong>Pays :</strong> <span id="profilPays"></span></div>
+   <div class="profile-line"><strong>Type de compte :</strong> <span id="profilRole"></span></div>
+   <div id="espaceProprietaire" class="hidden">
+    <h3>Mes annonces</h3><div id="mesAnnonces"></div>
+   </div>
+   <div id="espaceLocataire" class="hidden">
+    <h3>Mes favoris</h3><p class="muted">La fonction favoris sera ajoutée dans une prochaine étape.</p>
+   </div>
+   <button class="danger" type="button" onclick="deconnexion()">Se déconnecter</button>
+  </div>
+ </section>
+</main>
+
+<footer><strong>MONTAGNARD ACCOMMODATION</strong><p>Cameroun | Émirats arabes unis</p><p>Français | English</p><p>© 2026 Montagnard Accommodation</p></footer>
+
+<div class="modal-backdrop" id="modalDetail" onclick="fermerModal(event)">
+ <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitre" onclick="event.stopPropagation()">
+  <button class="modal-close" type="button" onclick="fermerModal()">Fermer</button>
+  <img id="modalPhoto" src="" alt="" style="width:100%;max-height:220px;object-fit:cover;border-radius:9px;margin:12px 0">
+  <h2 id="modalTitre"></h2><p id="modalLieu" class="muted"></p><p id="modalPrix" class="price"></p><p id="modalDescription"></p><a id="modalWhatsApp" class="button" target="_blank" rel="noopener">Contacter sur WhatsApp</a>
+ </div>
+</div>
+
+<script>
+"use strict";
+const CLE_ANNONCES="montagnard_annonces_v2";
+const CLE_COMPTES="montagnard_comptes_demo_v1";
+const CLE_SESSION="montagnard_session_demo_v1";
+let annonceEnModification=null;
+let modeCompte="inscription";
+let filtreActuel={pays:"",ville:"",type:""};
+
+function ouvrirMenu(){document.getElementById("menu").classList.toggle("open")}
+function fermerMenu(){document.getElementById("menu").classList.remove("open")}
+function chargerAnnonces(){try{return JSON.parse(localStorage.getItem(CLE_ANNONCES)||"[]")}catch(e){return []}}
+function sauvegarderAnnonces(a){localStorage.setItem(CLE_ANNONCES,JSON.stringify(a))}
+function chargerComptes(){try{return JSON.parse(localStorage.getItem(CLE_COMPTES)||"[]")}catch(e){return []}}
+function session(){try{return JSON.parse(localStorage.getItem(CLE_SESSION)||"null")}catch(e){return null}}
+function utilisateurActuel(){const s=session();return s?chargerComptes().find(u=>u.id===s.id)||null:null}
+function echapper(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function formatPrix(a){return Number(a.prix).toLocaleString("fr-FR")+" "+a.devise+" / mois"}
+
+function filtrerCategorie(type,element){
+ document.querySelectorAll(".category").forEach(c=>c.classList.remove("active"));
+ if(element)element.classList.add("active");
+ filtreActuel.type=type;appliquerFiltres();
+ document.getElementById("annonces").scrollIntoView({behavior:"smooth"});
+}
+function rechercherLogement(){
+ filtreActuel.pays=document.getElementById("pays").value;
+ filtreActuel.ville=document.getElementById("ville").value.trim().toLowerCase();
+ filtreActuel.type=document.getElementById("typeRecherche").value;
+ appliquerFiltres();document.getElementById("annonces").scrollIntoView({behavior:"smooth"});
+}
+function appliquerFiltres(){
+ let visibles=0;
+ document.querySelectorAll("#listeLogements .card").forEach(c=>{
+  const pays=c.dataset.country||"",ville=(c.dataset.city||"").toLowerCase(),type=c.dataset.type||"";
+  const ok=(!filtreActuel.pays||pays===filtreActuel.pays)&&(!filtreActuel.ville||ville.includes(filtreActuel.ville)||((c.dataset.quartier||"").toLowerCase().includes(filtreActuel.ville)))&&(!filtreActuel.type||type===filtreActuel.type);
+  c.classList.toggle("hidden",!ok);if(ok)visibles++;
+ });
+ document.getElementById("aucunResultat").classList.toggle("hidden",visibles!==0);
+}
+function creerCarte(a){
+ const article=document.createElement("article");article.className="card";article.dataset.id=a.id;article.dataset.country=a.pays;article.dataset.city=a.ville;article.dataset.quartier=a.quartier||"";article.dataset.type=a.type;
+ const img=document.createElement("img");img.src=a.photo;img.alt="Photo du logement";img.loading="lazy";
+ const info=document.createElement("div");info.className="card-info";
+ info.innerHTML='<span class="tag">Annonce publiée</span><h3>'+echapper(a.titre)+'</h3><p class="muted">'+echapper(a.ville)+', '+echapper(a.pays)+(a.quartier?" · "+echapper(a.quartier):"")+'</p><p class="price">'+echapper(formatPrix(a))+'</p><p>'+echapper(a.type)+'</p>';
+ const detail=document.createElement("button");detail.type="button";detail.textContent="Voir les détails";detail.onclick=()=>ouvrirDetail(a.id);info.appendChild(detail);article.append(img,info);return article;
+}
+function afficherAnnoncesEnregistrees(){
+ document.querySelectorAll("#listeLogements .card[data-id]").forEach(c=>c.remove());
+ chargerAnnonces().forEach(a=>document.getElementById("listeLogements").appendChild(creerCarte(a)));
+ appliquerFiltres();
+}
+function afficherFormCompte(mode){
+ modeCompte=mode;const titre=document.getElementById("titreCompte"),nom=document.getElementById("nomCompte"),role=document.getElementById("choixRoleBox");
+ const btn=document.getElementById("boutonCompte");
+ titre.textContent=mode==="inscription"?"Créer un compte":"Se connecter";
+ btn.textContent=mode==="inscription"?"Créer mon compte (démo)":"Me connecter (démo)";
+ nom.required=mode==="inscription";nom.parentElement.classList.toggle("hidden",mode==="connexion");
+ role.classList.toggle("hidden",mode==="connexion");
+ document.getElementById("messageCompte").textContent="";
+}
+function traiterCompte(e){
+ e.preventDefault();
+ const nom=document.getElementById("nomCompte").value.trim();
+ const email=document.getElementById("emailCompte").value.trim().toLowerCase();
+ const telephone=document.getElementById("telephoneCompte").value.trim();
+ const mdp=document.getElementById("motDePasseCompte").value;
+ const message=document.getElementById("messageCompte");
+ if(!email&&!telephone){message.textContent="Indique une adresse e-mail ou un numéro de téléphone.";return}
+ let comptes=chargerComptes();
+ if(modeCompte==="inscription"){
+  if(!nom){message.textContent="Entre ton nom complet.";return}
+  if(comptes.some(u=>(email&&u.email===email)||(telephone&&u.telephone===telephone))){message.textContent="Un compte utilise déjà cet e-mail ou ce téléphone.";return}
+  const u={id:"user_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),nom,email,telephone,mdp,role:document.getElementById("roleCompte").value,pays:document.getElementById("paysCompte").value};
+  comptes.push(u);localStorage.setItem(CLE_COMPTES,JSON.stringify(comptes));localStorage.setItem(CLE_SESSION,JSON.stringify({id:u.id}));
+  message.textContent="Compte de démonstration créé.";actualiserCompte();
+ }else{
+  const u=comptes.find(x=>((email&&x.email===email)||(telephone&&x.telephone===telephone))&&x.mdp===mdp);
+  if(!u){message.textContent="Identifiants incorrects ou compte introuvable sur cet appareil.";return}
+  localStorage.setItem(CLE_SESSION,JSON.stringify({id:u.id}));actualiserCompte();
+ }
+ document.getElementById("formCompte").reset();
+}
+function actualiserCompte(){
+ const u=utilisateurActuel(),zone=document.getElementById("zoneCompte"),profil=document.getElementById("profilCompte");
+ zone.classList.toggle("hidden",!!u);profil.classList.toggle("hidden",!u);
+ document.getElementById("authRequired").classList.toggle("hidden",!!u&&(u.role==="owner"||u.role==="agency"));
+ document.getElementById("formAnnonce").classList.toggle("hidden",!u||!(u.role==="owner"||u.role==="agency"));
+ if(!u)return;
+ document.getElementById("profilNom").textContent=u.nom||"—";
+ document.getElementById("profilEmail").textContent=u.email||"Non renseigné";
+ document.getElementById("profilTelephone").textContent=u.telephone||"Non renseigné";
+ document.getElementById("profilPays").textContent=u.pays||"—";
+ document.getElementById("profilRole").textContent=u.role==="tenant"?"Locataire":u.role==="owner"?"Propriétaire":"Agence immobilière";
+ const proprietaire=u.role==="owner"||u.role==="agency";
+ document.getElementById("espaceProprietaire").classList.toggle("hidden",!proprietaire);
+ document.getElementById("espaceLocataire").classList.toggle("hidden",proprietaire);
+ afficherEspaceProprietaire();
+}
+function deconnexion(){localStorage.removeItem(CLE_SESSION);annulerModification();actualiserCompte();document.getElementById("compte").scrollIntoView({behavior:"smooth"})}
+function afficherEspaceProprietaire(){
+ const zone=document.getElementById("mesAnnonces");if(!zone)return;zone.innerHTML="";
+ const u=utilisateurActuel();if(!u||!(u.role==="owner"||u.role==="agency"))return;
+ const annonces=chargerAnnonces().filter(a=>a.ownerId===u.id);
+ if(!annonces.length){zone.textContent="Tu n'as pas encore publié d'annonce.";return}
+ annonces.forEach(a=>{
+  const ligne=document.createElement("div");ligne.className="owner-row";
+  const img=document.createElement("img");img.src=a.photo;img.alt="";
+  const infos=document.createElement("div");infos.className="owner-info";
+  infos.innerHTML="<strong>"+echapper(a.titre)+"</strong><span class='muted'>"+echapper(a.ville)+" · "+echapper(formatPrix(a))+"</span>";
+  const modifier=document.createElement("button");modifier.className="small";modifier.textContent="Modifier";modifier.type="button";modifier.onclick=()=>modifierAnnonce(a.id);
+  const supprimer=document.createElement("button");supprimer.className="small danger";supprimer.textContent="Supprimer";supprimer.type="button";supprimer.onclick=()=>supprimerAnnonce(a.id);
+  const actions=document.createElement("div");actions.append(modifier,supprimer);ligne.append(img,infos,actions);zone.appendChild(ligne);
+ });
+}
+function modifierAnnonce(id){
+ const u=utilisateurActuel(),a=chargerAnnonces().find(x=>x.id===id);
+ if(!u||!a||a.ownerId!==u.id){alert("Tu ne peux modifier que tes propres annonces.");return}
+ annonceEnModification=id;
+ ["Pays","Type","Ville","Quartier","Titre","Prix","Devise"].forEach((x,i)=>{const ids=["pubPays","pubType","pubVille","pubQuartier","pubTitre","pubPrix","pubDevise"];document.getElementById(ids[i]).value=[a.pays,a.type,a.ville,a.quartier,a.titre,a.prix,a.devise][i]??""});
+ document.getElementById("pubDescription").value=a.description||"";
+ document.getElementById("pubWhatsapp").value=a.whatsapp||"";
+ document.getElementById("pubPhoto").required=false;document.getElementById("photoPreview").src=a.photo;document.getElementById("photoPreview").style.display="block";
+ document.getElementById("editBanner").classList.remove("hidden");document.getElementById("submitButton").textContent="Enregistrer les modifications";document.getElementById("cancelEditButton").classList.remove("hidden");
+ document.getElementById("publier").scrollIntoView({behavior:"smooth"});
+}
+function annulerModification(){
+ annonceEnModification=null;const f=document.getElementById("formAnnonce");if(f)f.reset();
+ document.getElementById("pubPhoto").required=true;document.getElementById("photoPreview").style.display="none";
+ document.getElementById("editBanner").classList.add("hidden");document.getElementById("cancelEditButton").classList.add("hidden");document.getElementById("submitButton").textContent="Publier l'annonce";document.getElementById("messagePublication").textContent="";
+}
+function supprimerAnnonce(id){
+ const u=utilisateurActuel();if(!u||!confirm("Confirmer la suppression de cette annonce ?"))return;
+ const nouvelles=chargerAnnonces().filter(a=>!(a.id===id&&a.ownerId===u.id));sauvegarderAnnonces(nouvelles);
+ if(annonceEnModification===id)annulerModification();afficherAnnoncesEnregistrees();afficherEspaceProprietaire();
+ document.getElementById("messagePublication").textContent="Annonce supprimée.";
+}
+document.getElementById("pubPhoto").addEventListener("change",function(){
+ const f=this.files[0],preview=document.getElementById("photoPreview");if(!f){if(!annonceEnModification)preview.style.display="none";return}
+ if(!f.type.startsWith("image/")){alert("Choisis un fichier image.");this.value="";return}
+ if(f.size>900000){alert("La photo doit faire moins de 900 Ko.");this.value="";return}
+ preview.src=URL.createObjectURL(f);preview.style.display="block";
+});
+document.getElementById("formAnnonce").addEventListener("submit",function(e){
+ e.preventDefault();const u=utilisateurActuel(),message=document.getElementById("messagePublication");
+ if(!u||!(u.role==="owner"||u.role==="agency")){message.textContent="Connecte-toi avec un compte propriétaire ou agence.";return}
+ const fichier=document.getElementById("pubPhoto").files[0];
+ if(fichier&&fichier.size>900000){message.textContent="Photo trop volumineuse.";return}
+ if(!fichier&&!annonceEnModification){message.textContent="Ajoute une photo.";return}
+ function enregistrer(photo){
+  const annonces=chargerAnnonces(),donnees={id:annonceEnModification||("annonce_"+Date.now()),ownerId:u.id,pays:document.getElementById("pubPays").value,type:document.getElementById("pubType").value,ville:document.getElementById("pubVille").value.trim(),quartier:document.getElementById("pubQuartier").value.trim(),titre:document.getElementById("pubTitre").value.trim(),prix:document.getElementById("pubPrix").value,devise:document.getElementById("pubDevise").value,description:document.getElementById("pubDescription").value.trim(),whatsapp:document.getElementById("pubWhatsapp").value.trim(),photo};
+  const index=annonces.findIndex(a=>a.id===annonceEnModification&&a.ownerId===u.id);
+  if(annonceEnModification&&index<0){message.textContent="Annonce introuvable.";return}
+  if(index>=0)annonces[index]=donnees;else annonces.push(donnees);
+  try{sauvegarderAnnonces(annonces);message.textContent=index>=0?"Annonce modifiée avec succès.":"Annonce publiée avec succès.";annulerModification();afficherAnnoncesEnregistrees();afficherEspaceProprietaire();document.getElementById("annonces").scrollIntoView({behavior:"smooth"})}
+  catch(err){message.textContent="Stockage insuffisant. Essaie une photo plus petite."}
+ }
+ if(fichier){const r=new FileReader();r.onload=()=>enregistrer(r.result);r.onerror=()=>message.textContent="Impossible de lire la photo.";r.readAsDataURL(fichier)}
+ else{const ancienne=chargerAnnonces().find(a=>a.id===annonceEnModification&&a.ownerId===u.id);if(ancienne)enregistrer(ancienne.photo)}
+});
+function ouvrirDetail(id){
+ const a=chargerAnnonces().find(x=>x.id===id);if(!a)return;
+ document.getElementById("modalPhoto").src=a.photo;document.getElementById("modalTitre").textContent=a.titre;
+ document.getElementById("modalLieu").textContent=a.ville+", "+a.pays+(a.quartier?" · "+a.quartier:"");
+ document.getElementById("modalPrix").textContent=formatPrix(a);document.getElementById("modalDescription").textContent=a.description;
+ const numero=(a.whatsapp||"").replace(/\D/g,"");
+ document.getElementById("modalWhatsApp").href="https://wa.me/"+numero+"?text="+encodeURIComponent("Bonjour, je suis intéressé(e) par votre annonce : "+a.titre);
+ document.getElementById("modalDetail").classList.add("show");
+}
+function fermerModal(e){if(!e||e.target.id==="modalDetail"||e.currentTarget.classList.contains("modal-close"))document.getElementById("modalDetail").classList.remove("show")}
+afficherAnnoncesEnregistrees();actualiserCompte();afficherFormCompte("inscription");
+</script>
+</body>
+</html>'''
+
+path = Path("/mnt/data/montagnard_accommodation_v1_7.html")
+path.write_text(html, encoding="utf-8")
+print(f"Fichier créé : {path}")
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Publications et Paiements (Demo)</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 2rem; max-width: 900px; margin: 0 auto; }
+    
+    h1, h2 { margin-bottom: 1rem; }
+    .card { background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    input[type="text"], textarea, select { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; }
+    
+    .btn { background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
+    .btn:hover { background: var(--primary-hover); }
+    .btn-danger { background: var(--danger); }
+    .btn-warning { background: var(--warning); color: var(--text); }
+    .btn-success { background: var(--success); }
+    
+    .post-list { display: grid; gap: 1rem; }
+    .post-card { background: var(--card-bg); padding: 1rem 1.5rem; border-radius: 8px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; }
+    .post-actions { display: flex; gap: 0.5rem; }
+    
+    .badge-demo { background: #fee2e2; color: #991b1b; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-left: 0.5rem; }
+    .payment-box { border: 2px dashed var(--warning); padding: 1rem; border-radius: 6px; background: #fffbe6; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Gestionnaire de Publications & Module de Paiement</h1>
+
+  <!-- FORMULAIRE DE PUBLICATION / MODIFICATION -->
+  <div class="card">
+    <h2 id="form-title">Nouvelle Publication</h2>
+    <form id="post-form">
+      <input type="hidden" id="post-id">
+      <div class="form-group">
+        <label for="title">Titre</label>
+        <input type="text" id="title" required placeholder="Entrez le titre...">
+      </div>
+      <div class="form-group">
+        <label for="content">Contenu</label>
+        <textarea id="content" rows="4" required placeholder="Rédigez votre contenu..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Prix d'accès (FCFA / EUR)</label>
+        <input type="text" id="price" placeholder="Ex: 5000 FCFA (Optionnel)">
+      </div>
+      <button type="submit" class="btn" id="submit-btn">Publier</button>
+      <button type="button" class="btn btn-warning" id="cancel-btn" style="display:none;">Annuler</button>
+    </form>
+  </div>
+
+  <!-- LISTE DES PUBLICATIONS (PUBLICATION, MODIFICATION, SUPPRESSION) -->
+  <h2>Publications existantes</h2>
+  <div id="posts-container" class="post-list"></div>
+
+  <!-- MODAL DE PAIEMENT SIMULÉ (DEMO) -->
+  <div id="payment-modal" class="card payment-box" style="display:none;">
+    <h3>Option de Paiement <span class="badge-demo">MODE DÉMONSTRATION</span></h3>
+    <p style="margin: 0.5rem 0;">Ce système est en mode test. Aucun débit réel ne sera effectué sans l'intégration préalable d'une passerelle sécurisée (ex: Stripe, Mobile Money API) et d'un serveur distant.</p>
+    
+    <div class="form-group" style="margin-top: 1rem;">
+      <label>Montant à régler : <span id="pay-amount">0</span></label>
+      <select id="payment-method">
+        <option value="card">Carte Bancaire (Simulé)</option>
+        <option value="om">Orange Money (Simulé)</option>
+        <option value="momo">MTN Mobile Money (Simulé)</option>
+      </select>
+    </div>
+    
+    <button class="btn btn-success" onclick="processDemoPayment()">Confirmer le paiement de démonstration</button>
+    <button class="btn btn-warning" onclick="closePaymentModal()">Fermer</button>
+  </div>
+
+  <script>
+    let posts = [
+      { id: 1, title: "Guide d'introduction", content: "Ceci est une publication gratuite.", price: "Gratuit" },
+      { id: 2, title: "Module Avancé", content: "Contenu premium nécessitant un accès.", price: "2500 FCFA" }
+    ];
+
+    const postsContainer = document.getElementById('posts-container');
+    const postForm = document.getElementById('post-form');
+    const formTitle = document.getElementById('form-title');
+    const postIdInput = document.getElementById('post-id');
+    const titleInput = document.getElementById('title');
+    const contentInput = document.getElementById('content');
+    const priceInput = document.getElementById('price');
+    const submitBtn = document.getElementById('submit-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    // Affichage des publications
+    function renderPosts() {
+      postsContainer.innerHTML = '';
+      posts.forEach(post => {
+        const item = document.createElement('div');
+        item.className = 'post-card';
+        item.innerHTML = `
+          <div>
+            <h3>${escapeHtml(post.title)}</h3>
+            <p style="margin-top: 0.5rem;">${escapeHtml(post.content)}</p>
+            <small style="color: #64748b; font-weight: bold; display: block; margin-top: 0.5rem;">Prix: ${escapeHtml(post.price || 'Gratuit')}</small>
+          </div>
+          <div class="post-actions">
+            ${post.price && post.price !== 'Gratuit' ? `<button class="btn btn-success" onclick="openPayment('${escapeHtml(post.price)}')">Payer (Demo)</button>` : ''}
+            <button class="btn btn-warning" onclick="editPost(${post.id})">Modifier</button>
+            <button class="btn btn-danger" onclick="deletePost(${post.id})">Supprimer</button>
+          </div>
+        `;
+        postsContainer.appendChild(item);
+      });
+    }
+
+    // Ajouter ou Modifier
+    postForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = postIdInput.value;
+      const title = titleInput.value;
+      const content = contentInput.value;
+      const price = priceInput.value;
+
+      if (id) {
+        // Modification
+        const index = posts.findIndex(p => p.id == id);
+        if (index !== -1) {
+          posts[index] = { id: Number(id), title, content, price };
+        }
+      } else {
+        // Nouvelle publication
+        const newPost = {
+          id: Date.now(),
+          title,
+          content,
+          price
+        };
+        posts.push(newPost);
+      }
+
+      resetForm();
+      renderPosts();
+    });
+
+    // Préparer la modification
+    window.editPost = function(id) {
+      const post = posts.find(p => p.id === id);
+      if (post) {
+        postIdInput.value = post.id;
+        titleInput.value = post.title;
+        contentInput.value = post.content;
+        priceInput.value = post.price;
+        
+        formTitle.textContent = "Modifier la publication";
+        submitBtn.textContent = "Enregistrer la modification";
+        cancelBtn.style.display = "inline-block";
+      }
+    };
+
+    // Suppression
+    window.deletePost = function(id) {
+      if (confirm("Voulez-vous vraiment supprimer cette publication ?")) {
+        posts = posts.filter(p => p.id !== id);
+        renderPosts();
+      }
+    };
+
+    // Reinitialiser le formulaire
+    cancelBtn.addEventListener('click', resetForm);
+
+    function resetForm() {
+      postIdInput.value = '';
+      titleInput.value = '';
+      contentInput.value = '';
+      priceInput.value = '';
+      formTitle.textContent = "Nouvelle Publication";
+      submitBtn.textContent = "Publier";
+      cancelBtn.style.display = "none";
+    }
+
+    // Gestion du Payment Demo
+    window.openPayment = function(amount) {
+      document.getElementById('pay-amount').textContent = amount;
+      document.getElementById('payment-modal').style.display = 'block';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    };
+
+    window.closePaymentModal = function() {
+      document.getElementById('payment-modal').style.display = 'none';
+    };
+
+    window.processDemoPayment = function() {
+      alert("Paiement de démonstration réussi ! (Pour un traitement réel, connectez votre passerelle de paiement et votre serveur).");
+      closePaymentModal();
+    };
+
+    // Protection anti-XSS simple
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Initialisation
+    renderPosts();
+  </script>
+</body>
+</html>
